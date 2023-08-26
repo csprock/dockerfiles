@@ -1,0 +1,29 @@
+ARG R_VERSION=4.1.2
+FROM rocker/tidyverse:${R_VERSION}
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    glpk-utils \
+    libtiff-dev \
+    libcairo2-dev \
+    libx11-dev \
+    libxt-dev
+
+# install R misc packages 
+COPY ./scripts/install-r-misc.sh install.sh
+RUN . ./install.sh && rm install.sh
+
+COPY ./scripts/install-r-plotting.sh install.sh
+RUN . ./install.sh && rm install.sh
+
+COPY ./scripts/install-r-mlstats.sh install.sh
+RUN . ./install.sh && rm install.sh
+
+# install radian
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-dev \
+    python3-pip \
+    && python3 -m pip install --upgrade pip \
+    && pip3 install --upgrade setuptools \
+    && pip3 install -U radian
+

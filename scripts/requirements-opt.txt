@@ -1,0 +1,2 @@
+pyomo[optional]==6.5.0
+cvxpy[CBC,GLPK]==1.3

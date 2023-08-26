@@ -1,0 +1,9 @@
+ARG VERSION=0.1
+FROM csprock/python-data-science:${VERSION}
+
+LABEL author="Carson Sprock <csprock@gmail.com>"
+
+USER user
+
+COPY ./scripts/requirements-ts.txt /tmp/requirements.txt
+RUN pip install --user -r /tmp/requirements.txt && rm /tmp/requirements.txt

@@ -1,0 +1,12 @@
+ARG VERSION=0.1
+FROM csprock/python-base:${VERSION}
+
+LABEL author="Carson Sprock <csprock@gmail.com>"
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+USER user
+
+COPY ./scripts/requirements-data-science.txt requirements.txt
+RUN pip install --user -r requirements.txt && rm requirements.txt
+RUN pip install --user torch==2.0.1 --extra-index-url https://download.pytorch.org/whl/cpu
