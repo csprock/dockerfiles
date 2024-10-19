@@ -1,8 +1,8 @@
-autopep8==1.7.0
-black==22.8.0
-yapf==0.32.0
-bandit==1.7.4
-flake8==5.0.4
-pydocstyle==6.1.1
-pylint==2.15.3
-setuptools==68.1.2
+autopep8==2.3.1
+black==24.10.0
+yapf==0.40.2
+bandit==1.7.10
+flake8==7.1.1
+pydocstyle==6.3.0
+pylint==3.3.1
+setuptools==75.2.2
