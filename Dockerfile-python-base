@@ -24,7 +24,7 @@ ENV PATH "${PATH}:/home/user/.local/bin"
 RUN echo "export PATH=${PATH} >> /home/user/.bashrc"
 
 RUN mkdir -p /app && \
-    chown $USERNAME:$USER_UID /app
+    chown -R $USERNAME:$USER_UID /app
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 
-USER ${USERNAME}
+USER $USERNAME
 
 # install poetry
 RUN curl -sSL https://install.python-poetry.org | python -
