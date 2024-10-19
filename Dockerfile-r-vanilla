@@ -1,0 +1,78 @@
+ARG R_VERSION
+FROM rocker/r-ver:${R_VERSION}
+
+LABEL author="Carson Sprock <csprock@gmail.com>"
+LABEL r_version=${R_VERSION}
+
+ARG USERNAME=user
+ARG USER_UID=1000
+ARG USER_GID=1000
+
+# create non-root user
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME --shell /bin/bash \
+    #
+    # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+ENV PATH "${PATH}:/home/user/.local/bin"
+RUN echo "export PATH=${PATH} >> /home/user/.bashrc"
+
+RUN mkdir -p /home/user/workspace && \
+    chown $USERNAME:$USER_UID /home/user/workspace
+WORKDIR /home/user/workspace
+
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --install-recommends \
+    build-essential \
+    freetds-common \ 
+    freetds-bin \
+    freetds-dev \
+    git-all \
+    pandoc \
+    pandoc-citeproc \
+    software-properties-common \
+    tdsodbc \
+	unixodbc-dev \
+    unixodbc \
+	unzip \
+    vim \
+	wget \
+    x11proto-core-dev \
+	zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+# Install Tidyverse 
+RUN install2.r --error \
+    --deps TRUE \
+    tidyverse \
+    devtools \
+    formatR \
+    remotes \
+    selectr \
+    caTools \ 
+    languageserver \
+    httpgd
+
+
+
+
+### Install Pip3 ###
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    #python3-dev \
+    python3-pip \
+    && python3 -m pip install --upgrade pip \
+    && pip3 install --upgrade setuptools
+    
+# Install Radian console
+RUN pip3 install -U radian
+
+USER ${USERNAME}
