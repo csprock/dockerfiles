@@ -25,7 +25,8 @@ build:
 		--file Dockerfile-$(lang)-$(name) \
 		--tag csprock/$(lang)-$(name):$(version) \
 		--build-arg PYTHON_VERSION=${PYTHON_VERSION} \
-		--build-arg VERSION=$(version)
+		--build-arg VERSION=$(version) \
+		--build-arg R_VERSION=${R_VERSION}
 
 
 clean:
