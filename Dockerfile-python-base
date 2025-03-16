@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.10.7-slim-bullseye
+ARG PYTHON_VERSION=3.13.2-slim-bookworm
 FROM python:${PYTHON_VERSION}
 
 LABEL author="Carson Sprock <csprock@gmail.com>"
