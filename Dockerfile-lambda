@@ -1,0 +1,24 @@
+ARG PYTHON_VERSION=3.13.4-slim-bookworm
+FROM python:${PYTHON_VERSION}
+
+RUN mkdir /app
+
+RUN apt-get update && \
+    apt-get install -y \
+    g++ \
+    make \
+    cmake \
+    build-essential \
+    unzip \
+    libcurl4-openssl-dev
+
+# install the Lambda runtime interface client
+RUN pip install --target /app awslambdaric
+# install the lambda runtime interface emulator
+ADD https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie /usr/local/bin/aws-lambda-rie
+RUN chmod +x /usr/local/bin/aws-lambda-rie
+
+
+COPY ./scripts/entry.sh /app/entry.sh
+
+ENTRYPOINT ["/app/entry.sh"]
