@@ -1,5 +1,5 @@
-ARG VERSION=latest
-FROM csprock/dockerfiles:python-base-${VERSION}
+ARG TAG=python-base
+FROM csprock/dockerfiles:${TAG}
 
 LABEL author="Carson Sprock <csprock@gmail.com>"
 
