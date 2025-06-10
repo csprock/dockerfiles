@@ -56,5 +56,6 @@ clean:
 push:
 	docker push csprock/dockerfiles:$(lang)-$(name)-$(date)
 
+
 push-latest:
 	docker push csprock/dockerfiles:$(lang)-$(name)-latest

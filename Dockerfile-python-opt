@@ -1,5 +1,5 @@
-ARG VERSION=latest
-FROM csprock/python-data-science:${VERSION}
+ARG TAG=python-data-science-latest
+FROM csprock/dockerfiles:${TAG}
 
 LABEL author="Carson Sprock <csprock@gmail.com>"
 
@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     coinor-cbc \
     coinor-libcbc-dev \
     libmetis-dev \
-    libgfortran-10-dev
+    libgfortran-11-dev
 
 
 # install ASL
