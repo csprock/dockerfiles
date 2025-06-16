@@ -20,5 +20,7 @@ RUN chmod +x /usr/local/bin/aws-lambda-rie
 
 
 COPY ./scripts/entry.sh /app/entry.sh
+RUN chmod +x /app/entry.sh
+COPY ./handler.py /app/handler.py
 
 ENTRYPOINT ["/app/entry.sh"]
