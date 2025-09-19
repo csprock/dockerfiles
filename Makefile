@@ -3,7 +3,7 @@
 SHELL := /bin/bash
 
 # Build arguments
-R_VERSION := 4.1.2
+R_VERSION := 4.3.3
 PYTHON_VERSION := 3.12.2-slim-bookworm
 
 
@@ -20,9 +20,10 @@ PORT = 8443
 build-r:
 	docker build . \
 		--file Dockerfile-r-tidyverse \
-		--tag csprock/dockerfiles/r-tidyverse-${R_VERSION} \
-		--tag csprock/dockerfiles/r-tidyverse-${R_VERSION}-${date} \
-		--tag csprock/dockerfiles/r-tidyverse-${R_VERSION}-latest \
+		--tag csprock/dockerfiles:r-tidyverse-${R_VERSION} \
+		--tag csprock/dockerfiles:r-tidyverse-${R_VERSION}-${date} \
+		--tag csprock/dockerfiles:r-tidyverse-${R_VERSION}-latest \
+		--tag csprock/dockerfiles:r-tidyverse-latest \
 		--build-arg R_VERSION=${R_VERSION}
 
 
