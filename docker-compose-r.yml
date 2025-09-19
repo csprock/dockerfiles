@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  r-tidyverse:
+    image: csprock/dockerfiles:r-tidyverse-latest
+    container_name: r-tidyverse-test
+    environment:
+      - TZ=America/Chicago
+      - USERID=$(id -u)
+      - GROUPID=$(id -g)
+      - DISABLE_AUTH=true
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./:/home/rstudio/workspace
+      - ./.rstudio_config:/home/rstudio/.config/rstudio
