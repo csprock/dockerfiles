@@ -13,3 +13,9 @@ services:
       AWS_LAMBDA_FUNCTION_MEMORY_SIZE: 512
     command: ["handler.handler"]
     working_dir: /app
+    networks:
+      - lambda
+
+networks:
+  lambda:
+    driver: bridge
