@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     coinor-cbc \
     coinor-libcbc-dev \
     libmetis-dev \
-    libgfortran-11-dev
+    libgfortran-12-dev
 
 
 # install ASL
