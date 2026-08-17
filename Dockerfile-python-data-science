@@ -1,4 +1,4 @@
-ARG TAG=python-base
+ARG TAG=python-base-latest
 FROM csprock/dockerfiles:${TAG}
 
 LABEL author="Carson Sprock <csprock@gmail.com>"
@@ -9,4 +9,3 @@ USER user
 
 COPY ./scripts/requirements-data-science.txt requirements.txt
 RUN pip install --user -r requirements.txt && rm requirements.txt
-RUN pip install --user torch==2.6.0 --extra-index-url https://download.pytorch.org/whl/cpu

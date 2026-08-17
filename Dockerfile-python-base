@@ -36,7 +36,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     git-all \
     make \ 
-    software-properties-common \
     unzip \
     vim \
     wget \
