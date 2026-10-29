@@ -4,7 +4,7 @@ SHELL := /bin/bash
 
 # Build arguments
 R_VERSION := 4.3.3
-PYTHON_VERSION := 3.14.7-slim-trixie
+PYTHON_VERSION := 3.15.2-slim-trixie
 
 
 # Allow date to be set from command line, default to today's date

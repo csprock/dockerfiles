@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.13.2-slim-bookworm
+ARG PYTHON_VERSION=3.15.2-slim-trixie
 FROM python:${PYTHON_VERSION}
 
 LABEL author="Carson Sprock <csprock@gmail.com>"
@@ -21,7 +21,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 ENV PATH="${PATH}:/home/user/.local/bin"
-RUN echo "export PATH=${PATH} >> /home/user/.bashrc"
+RUN echo "export PATH=${PATH}" >> /home/user/.bashrc \
+    && chown $USERNAME:$USER_GID /home/user/.bashrc
 
 RUN mkdir -p /app && \
     chown -R $USERNAME:$USER_UID /app
@@ -39,9 +40,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     vim \
     wget \
+    openssh-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# install GitHub CLI
+RUN (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y \
+	&& sudo apt-get clean \
+	&& sudo rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
 
